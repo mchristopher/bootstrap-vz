@@ -20,5 +20,5 @@ for a specific cloud provider are, [see a list of available plugins](http://ands
 and learn [how you create a manifest](http://andsens.github.io/bootstrap-vz/manifest.html).
 
 Developers
-''''''''''
+----------
 The API documentation can be found at [bootstrap-vz.readthedocs.org](http://bootstrap-vz.readthedocs.org).
