@@ -1,7 +1,7 @@
-from base import Task
-from common import phases
-from common.tasks.packages import InstallPackages
-from common.exceptions import TaskError
+from bootstrapvz.base import Task
+from bootstrapvz.common import phases
+from bootstrapvz.common.tasks.packages import InstallPackages
+from bootstrapvz.common.exceptions import TaskError
 
 
 class CheckGuestAdditionsPath(Task):
@@ -28,7 +28,7 @@ class AddGuestAdditionsPackages(Task):
 		info.packages.add('build-essential')
 		info.packages.add('dkms')
 
-		from common.tools import log_check_call
+		from bootstrapvz.common.tools import log_check_call
 		[kernel_version] = log_check_call(['chroot', info.root,
 		                                   'uname', '-r'])
 		kernel_headers_pkg = 'linux-headers-{version}'.format(version=kernel_version)
@@ -51,7 +51,7 @@ class InstallGuestAdditions(Task):
 		root.add_mount(guest_additions_path, mount_path, ['-o', 'loop'])
 
 		install_script = os.path.join('/', mount_dir, 'VBoxLinuxAdditions.run')
-		from common.tools import log_call
+		from bootstrapvz.common.tools import log_call
 		status, out, err = log_call(['chroot', info.root,
 		                            install_script, '--nox11'])
 		# Install will exit with $?=1 because X11 isn't installed

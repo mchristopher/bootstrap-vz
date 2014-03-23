@@ -1,6 +1,6 @@
-from base import Task
-from common import phases
-from common.tasks import apt
+from bootstrapvz.base import Task
+from .. import phases
+import apt
 
 
 class AddManifestPackages(Task):
@@ -40,7 +40,7 @@ class InstallPackages(Task):
 	@classmethod
 	def install_remote(cls, info, remote_packages):
 		import os
-		from common.tools import log_check_call
+		from ..tools import log_check_call
 		from subprocess import CalledProcessError
 		try:
 			env = os.environ.copy()
@@ -74,7 +74,7 @@ class InstallPackages(Task):
 	@classmethod
 	def install_local(cls, info, local_packages):
 		from shutil import copy
-		from common.tools import log_check_call
+		from ..tools import log_check_call
 		import os
 
 		absolute_package_paths = []
