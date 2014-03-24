@@ -90,11 +90,19 @@ class InstallGrub(Task):
 						                         prefix=partition_prefix,
 						                         idx=idx + 1))
 
-			# Hack around bad link
-			log_check_call(['chroot', info.root,
-			                'rm', '-fr', '/dev/mapper/xvdf1'])
-			log_check_call(['chroot', info.root,
-			                'ln', '-s', '../xvdf1', '/dev/mapper/xvdf1'])
+						# Fix issue with device mapper symlink on EC2
+						if info.manifest.provider in ['ec2']:
+							device_name_with_index = ('{device_name}{idx}'
+							                          .format(device_name=device_path.split('/')[-1],
+													          idx=idx + 1))
+							log_check_call(['chroot', info.root,
+							                'rm', '-f', '/dev/mapper/{device_name}'
+							                .format(device_name=device_name_with_index)])
+							log_check_call(['chroot', info.root,
+							                'ln', '-s', '../{device_name}'
+							                .format(device_name=device_name_with_index)
+							                , '/dev/mapper/{device_name}'
+							                .format(device_name=device_name_with_index)])
 
 			# Install grub
 			log_check_call(['chroot', info.root,
