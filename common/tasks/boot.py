@@ -90,6 +90,12 @@ class InstallGrub(Task):
 						                         prefix=partition_prefix,
 						                         idx=idx + 1))
 
+			# Hack around bad link
+			log_check_call(['chroot', info.root,
+			                'rm', '-fr', '/dev/mapper/xvdf1'])
+			log_check_call(['chroot', info.root,
+			                'ln', '-s', '../xvdf1', '/dev/mapper/xvdf1'])
+
 			# Install grub
 			log_check_call(['chroot', info.root,
 			                'grub-install', device_path])

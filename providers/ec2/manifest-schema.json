@@ -28,7 +28,7 @@
 			"properties": {
 				"bootloader": {
 					"type": "string",
-					"enum": ["pvgrub", "extlinux"]
+					"enum": ["pvgrub", "extlinux", "grub"]
 				}
 			}
 		},
